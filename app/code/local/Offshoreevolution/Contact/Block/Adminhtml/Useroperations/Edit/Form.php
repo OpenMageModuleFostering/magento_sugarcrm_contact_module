@@ -3,6 +3,7 @@ class Offshoreevolution_Contact_Block_Adminhtml_Useroperations_Edit_Form extends
 {
 	protected function _prepareForm()
 	{
+		$prefix = Mage::getConfig()->getTablePrefix();
 		$read = Mage::getSingleton('core/resource')->getConnection('core_read');
 		$write = Mage::getSingleton('core/resource')->getConnection('core_write');
 				
@@ -26,7 +27,7 @@ class Offshoreevolution_Contact_Block_Adminhtml_Useroperations_Edit_Form extends
 		));
 		foreach($modules as $key=>$val)
 		{
-			$resultRs = $read->fetchAll("SELECT * FROM oepl_sugar WHERE module='".$val."'");
+			$resultRs = $read->fetchAll("SELECT * FROM ".$prefix."oepl_sugar WHERE module='".$val."'");
 			//echo "<pre>"; print_r($resultRs); echo "</pre>";
 			
 			$temp = $val;

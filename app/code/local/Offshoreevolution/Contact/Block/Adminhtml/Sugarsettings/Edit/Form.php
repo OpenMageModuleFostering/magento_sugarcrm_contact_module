@@ -7,11 +7,12 @@ class Offshoreevolution_Contact_Block_Adminhtml_Sugarsettings_Edit_Form extends 
 * @return Mage_Adminhtml_Block_Widget_Form
 */
 	protected function _prepareForm()
-	{
+	{	
+		$prefix = Mage::getConfig()->getTablePrefix();
 		$read = Mage::getSingleton('core/resource')->getConnection('core_read');
 		$connection = Mage::getSingleton('core/resource')->getConnection('core_write');
 		
-		$resultRs = $read->fetchAll("SELECT * FROM oepl_sugar WHERE module='login'");
+		$resultRs = $read->fetchAll("SELECT * FROM ".$prefix."oepl_sugar WHERE module='login'");
 				
 		$form = new Varien_Data_Form(
 								  array(

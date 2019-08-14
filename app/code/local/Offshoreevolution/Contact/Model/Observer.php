@@ -17,6 +17,7 @@ class Offshoreevolution_Contact_Model_Observer extends Varien_Event_Observer
 		$Customer = Mage::getSingleton('customer/session')->getCustomer();
 		$read = Mage::getSingleton('core/resource')->getConnection('core_read');
 		$write  = Mage::getSingleton('core/resource')->getConnection('core_write');
+		$prefix = Mage::getConfig()->getTablePrefix();
 		if(is_object($Customer)){
 			$Customer = $Customer->getData();
 			$customerId = $Customer['entity_id'];
@@ -26,8 +27,8 @@ class Offshoreevolution_Contact_Model_Observer extends Varien_Event_Observer
 				$type = 'Shipping';
 			}
 			
-			$fieldsToExport = $read->fetchAll("SELECT * FROM oepl_map_fields WHERE module = 'Contacts' AND mag_field_type = '".$type."' AND `mag_field` != ''");
-			$permission 	= $read->fetchAll("SELECT * FROM oepl_sugar WHERE module = 'Contacts'");
+			$fieldsToExport = $read->fetchAll("SELECT * FROM ".$prefix."oepl_map_fields WHERE module = 'Contacts' AND mag_field_type = '".$type."' AND `mag_field` != ''");
+			$permission 	= $read->fetchAll("SELECT * FROM ".$prefix."oepl_sugar WHERE module = 'Contacts'");
 			
 			$Flag = true;
 			$name_value_list = array();
@@ -35,7 +36,7 @@ class Offshoreevolution_Contact_Model_Observer extends Varien_Event_Observer
 			{
 				$name_value_list[$temp['field_name']] = $address[$temp['mag_field']] ;
 			}
-			$query2 = "SELECT sugar_id FROM oepl_sugar_map 
+			$query2 = "SELECT sugar_id FROM ".$prefix."oepl_sugar_map 
 					   WHERE mag_id = '".$customerId."' AND module='Contact'";
 			$sugarID = $read->fetchAll($query2);
 			if(!empty($sugarID) && $sugarID != '')
@@ -79,12 +80,12 @@ class Offshoreevolution_Contact_Model_Observer extends Varien_Event_Observer
 		} else {
 			$defaultShipping = array();
 		}
-		
+		$prefix = Mage::getConfig()->getTablePrefix();
 		$read = Mage::getSingleton('core/resource')->getConnection('core_read');
 		$write  = Mage::getSingleton('core/resource')->getConnection('core_write');
 
-		$fieldsToExport = $read->fetchAll("SELECT * FROM oepl_map_fields WHERE module = 'Contacts' AND `mag_field` != ''");
-		$permission 	= $read->fetchAll("SELECT * FROM oepl_sugar WHERE module = 'Contacts'");
+		$fieldsToExport = $read->fetchAll("SELECT * FROM ".$prefix."oepl_map_fields WHERE module = 'Contacts' AND `mag_field` != ''");
+		$permission 	= $read->fetchAll("SELECT * FROM ".$prefix."oepl_sugar WHERE module = 'Contacts'");
 		
 		$Flag = true;
 		$name_value_list = array();
@@ -98,7 +99,7 @@ class Offshoreevolution_Contact_Model_Observer extends Varien_Event_Observer
 				$name_value_list[$temp['field_name']] = $customerData[$temp['mag_field']] ;
 			}
 		}
-		$query2 = "SELECT sugar_id FROM oepl_sugar_map 
+		$query2 = "SELECT sugar_id FROM ".$prefix."oepl_sugar_map 
 				   WHERE mag_id = '".$customerData['entity_id']."' AND module='Contact'";
 		$sugarID = $read->fetchAll($query2);
 		if(!empty($sugarID) && $sugarID != '')
@@ -127,7 +128,7 @@ class Offshoreevolution_Contact_Model_Observer extends Varien_Event_Observer
 			}
 			if(empty($sugarID)){
 				if($Flag){
-					$query = "INSERT INTO oepl_sugar_map 
+					$query = "INSERT INTO ".$prefix."oepl_sugar_map 
 					  SET mag_id='".$customerData['entity_id']."',sugar_id='".$SugarResult->id."',module='Contact'";
 					$write->query($query);
 				}
@@ -136,12 +137,13 @@ class Offshoreevolution_Contact_Model_Observer extends Varien_Event_Observer
 	}
 	
 	public function guest_user_sync($observer){
+		$prefix = Mage::getConfig()->getTablePrefix();
 		if(!Mage::helper('customer')->isLoggedIn()){
 			$read = Mage::getSingleton('core/resource')->getConnection('core_read');
 			$write  = Mage::getSingleton('core/resource')->getConnection('core_write');
 	
-			$fieldsToExport = $read->fetchAll("SELECT * FROM oepl_map_fields WHERE module = 'Contacts' AND `mag_field` != ''");
-			$permission 	= $read->fetchAll("SELECT * FROM oepl_sugar WHERE module = 'Contacts' AND meta_key = 'guest_order_sync'");
+			$fieldsToExport = $read->fetchAll("SELECT * FROM '".$prefix."'oepl_map_fields WHERE module = 'Contacts' AND `mag_field` != ''");
+			$permission 	= $read->fetchAll("SELECT * FROM '".$prefix."'oepl_sugar WHERE module = 'Contacts' AND meta_key = 'guest_order_sync'");
 			$permission = $permission[0];
 			if($permission['meta_value'] == 'Y')
 			{
@@ -171,16 +173,16 @@ class Offshoreevolution_Contact_Model_Observer extends Varien_Event_Observer
 	
 	public function userDelete($observer)
 	{
-		
+		$prefix = Mage::getConfig()->getTablePrefix();
 		$read = Mage::getSingleton('core/resource')->getConnection('core_read');
 		$write  = Mage::getSingleton('core/resource')->getConnection('core_write');
 		$data = $observer->getEvent()->getData();
 		$id = $data['object']->_data['entity_id'];
 		if($id && $id != ''){
-			$permission 	= $read->fetchAll("SELECT * FROM oepl_sugar WHERE module = 'Contacts' AND meta_key= 'Delete'");
+			$permission 	= $read->fetchAll("SELECT * FROM '".$prefix."'oepl_sugar WHERE module = 'Contacts' AND meta_key= 'Delete'");
 			if($permission[0]['meta_value'] == 'Y')
 			{
-				$query = "SELECT sugar_id FROM oepl_sugar_map 
+				$query = "SELECT sugar_id FROM '".$prefix."'oepl_sugar_map 
 											WHERE mag_id = '".$id."'";
 				
 				$sugarIdRs = $read->fetchAll($query);
@@ -202,7 +204,7 @@ class Offshoreevolution_Contact_Model_Observer extends Varien_Event_Observer
 				if($sugarID && $sugarID != '')
 				{
 					$where = "mag_id = ".$id." AND sugar_id = '".$sugarID."'";
-					$write->delete('oepl_sugar_map', $where);
+					$write->delete($prefix.'oepl_sugar_map', $where);
 				}
 			}
 		}

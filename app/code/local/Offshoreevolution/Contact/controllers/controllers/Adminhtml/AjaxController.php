@@ -71,7 +71,7 @@ class Offshoreevolution_Contact_Adminhtml_AjaxController extends Mage_Adminhtml_
 		$write  = Mage::getSingleton('core/resource')->getConnection('core_write');
 		$prefix = Mage::getConfig()->getTablePrefix();
 	
-		$write->query('UPDATE oepl_map_fields SET mag_field = "'.$field[1].'", mag_field_type = "'.$field[0].'" WHERE pid ='.trim($data['id']).'');
+		$write->query('UPDATE '.$prefix.'oepl_map_fields SET mag_field = "'.$field[1].'", mag_field_type = "'.$field[0].'" WHERE pid ='.trim($data['id']).'');
 		echo "true";
 	}
 }

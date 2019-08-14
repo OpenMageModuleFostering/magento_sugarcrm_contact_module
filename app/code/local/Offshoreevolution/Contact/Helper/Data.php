@@ -22,9 +22,10 @@ class Offshoreevolution_Contact_Helper_Data extends Mage_Core_Helper_Abstract
 	
 	public function getSugarObject()
 	{
+		$prefix = Mage::getConfig()->getTablePrefix();
 		$ObjectSugar = new Offshoreevolution_ClassOEPL();
 		$read = Mage::getSingleton('core/resource')->getConnection('core_read');
-		$resultRs = $read->fetchAll("SELECT * FROM oepl_sugar WHERE module='login'");
+		$resultRs = $read->fetchAll("SELECT * FROM ".$prefix."oepl_sugar WHERE module='login'");
 		$ObjectSugar->SugarURL = $resultRs[0]['meta_value'];
 		$ObjectSugar->SugarUser = $resultRs[1]['meta_value'];
 		$ObjectSugar->SugarPass = $resultRs[2]['meta_value'];

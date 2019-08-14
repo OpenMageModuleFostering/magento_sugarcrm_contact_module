@@ -11,6 +11,7 @@ class Offshoreevolution_Contact_Adminhtml_SugarsettingController extends Mage_Ad
 	
 	public function testAction()
 	{
+		$prefix = Mage::getConfig()->getTablePrefix();
 		if($this->getRequest()->getPost())
 		{
 			$data = $this->getRequest()->getPost();
@@ -25,12 +26,12 @@ class Offshoreevolution_Contact_Adminhtml_SugarsettingController extends Mage_Ad
 				echo "true";
 			} else {
 				echo "false";
-			}
+			} 
 		}
 	}
 	
 	public function saveAction(){
-		echo "<pre>";
+		$prefix = Mage::getConfig()->getTablePrefix();
 		$data = $this->getRequest()->getPost();
 		
 		$objSugar = new Offshoreevolution_ClassOEPL();
@@ -43,7 +44,7 @@ class Offshoreevolution_Contact_Adminhtml_SugarsettingController extends Mage_Ad
 			$read = Mage::getSingleton('core/resource')->getConnection('core_read');
 			$connection = Mage::getSingleton('core/resource')->getConnection('core_write');
 			$skiparray = array('form_key','password');
-			$connection->query('DELETE FROM oepl_sugar WHERE module = "login"');
+			$connection->query('DELETE FROM '.$prefix.'oepl_sugar WHERE module = "login"');
 			foreach($data as $key=>$value)
 			{
 				$flag = false;
@@ -83,6 +84,7 @@ class Offshoreevolution_Contact_Adminhtml_SugarsettingController extends Mage_Ad
 	}
 	
 	public function AccesssaveAction(){
+		$prefix = Mage::getConfig()->getTablePrefix();
 		$data = $this->getRequest()->getPost();
 		$read = Mage::getSingleton('core/resource')->getConnection('core_read');
 		$write = Mage::getSingleton('core/resource')->getConnection('core_write');
@@ -91,7 +93,7 @@ class Offshoreevolution_Contact_Adminhtml_SugarsettingController extends Mage_Ad
 		$modules = $test->ModuleList;
 		$operations = array('Insert','Update','Delete');
 		foreach($modules as $module){
-			$write->query('DELETE FROM oepl_sugar WHERE module = "'.$module.'"');
+			$write->query('DELETE FROM '.$prefix.'oepl_sugar WHERE module = "'.$module.'"');
 			foreach ($operations as $op){
 				$fields['module'] = $module;
 				$fields['meta_key'] = $op;
@@ -102,7 +104,7 @@ class Offshoreevolution_Contact_Adminhtml_SugarsettingController extends Mage_Ad
 		$fields['module'] = 'Contacts';
 		$fields['meta_key'] = 'guest_order_sync';
 		$fields['meta_value'] = $data['guest_order_sync'];
-		$write->insert('oepl_sugar', $fields);
+		$write->insert($prefix.'oepl_sugar', $fields);
 		Mage::getSingleton('core/session')->addSuccess('Operations saved successfully');
 		$this->_redirect('*/*/Useroperations');
 	}
