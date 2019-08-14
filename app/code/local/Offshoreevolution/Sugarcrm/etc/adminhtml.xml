@@ -1,0 +1,62 @@
+<?xml version="1.0" ?>
+<config>
+    <menu>
+        <sugarcrm_settings translate="title" module="sugarcrm">
+            <title>SugarCRM</title>
+            <sort_order>9999</sort_order>
+            <children>
+                <form translate="title" module="sugarcrm">
+                    <title>SugarCRM Settings</title>
+                    <sort_order>10</sort_order>
+                    <action>adminhtml/sugarsetting</action>
+                </form>
+				
+				<module_list translate="title" module="sugarcrm">
+                    <title>Module List</title>
+                    <sort_order>11</sort_order>
+                    <action>adminhtml/sugarsetting/modulelist</action>
+                </module_list>
+				
+				<user_operations translate="title" module="sugarcrm">
+                    <title>User Operations</title>
+                    <sort_order>12</sort_order>
+                    <action>adminhtml/sugarsetting/useroperations</action>
+                </user_operations>
+				
+				<!--<sync_table translate="title" module="sugarcrm">
+                    <title>Synchronization Table</title>
+                    <sort_order>13</sort_order>
+                    <action>adminhtml/synctable/index</action>
+                </sync_table>
+				
+				<sync_bridge translate="title" module="sugarcrm">
+                    <title>Sugar Bridge</title>
+                    <sort_order>14</sort_order>
+                    <action>adminhtml/synctable/bridge</action>
+                </sync_bridge>-->
+            </children>
+        </sugarcrm_settings>
+    </menu>
+	
+	<acl>
+        <resources>
+            <all>
+                <title>Allow Everything</title>
+            </all>
+            <admin>
+                <children>
+                    <sugarcrm_settings>
+                        <title>Sugarcrm settings</title>
+                        <sort_order>90</sort_order>
+                        <children>
+                            <form>
+                                <title>Form</title>
+                                <sort_order>10</sort_order>
+                            </form>
+                        </children>
+                    </sugarcrm_settings>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

@@ -1,0 +1,34 @@
+<script>
+	$jq(".syncAction").click(function(){
+		var thisObj = $jq(this);
+		var field = $jq(this).parent('td').siblings('td').find('select').val();
+		var id = $jq(this).attr('pid');
+		var ajaxUrl = '<?php echo $this->getUrl('adminhtml/ajax/crmsync') ?>';
+		
+		new Ajax.Request(ajaxUrl, {
+			method: 'post',
+			parameters: {field:field,id:id},
+			onComplete: function(response) {
+				if(response.responseText == "true")
+				{
+					var result = field.split('#');
+					$jq("#messages").html('<ul class="messages"><li class="success-msg"><ul><li><span>Sync Successfully</span></li></ul></li></ul>');
+					if(result[0] == "Billing"){
+						thisObj.parent('td').siblings('td').find('.fieldDesc').html("<strong>Billing</strong> Address Field");
+					} else if(result[0] == "Shipping"){
+						thisObj.parent('td').siblings('td').find('.fieldDesc').html("<strong>Shipping</strong> Address Field");
+					} else if(result[0] == "Default"){
+						thisObj.parent('td').siblings('td').find('.fieldDesc').html("<strong>Contact</strong> information field");
+					} else {
+						thisObj.parent('td').siblings('td').find('.fieldDesc').html("");
+					}
+				}
+				else
+				{
+					$jq("#messages").html('<ul class="messages"><li class="error-msg"><ul><li><span>Error Occured,Try again</span></li></ul></li></ul>');
+				}
+				$jq("#loading-mask").hide();
+			}
+		});
+	});
+</script>

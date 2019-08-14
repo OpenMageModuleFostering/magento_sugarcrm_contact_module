@@ -1,0 +1,16 @@
+{
+    "name": "OpenMageModuleFostering/Magento_SugarCRM_Contact_Module",
+    "type": "magento-module",
+    "license": "OSL-v3.0",
+    "homepage": "",
+    "description": "This extension is simple, easy to integrate solution to keep your SugarCRM Contacts up-to-date with registered users or guest users on your Magento site.",
+    "authors": [
+    {
+        "name": "Dipesh Patel",
+        "email": "dipesh.99869@gmail.com"
+    }
+],
+    "suggest": {
+        "magento-hackathon/magento-composer-installer": "*"
+    }
+}

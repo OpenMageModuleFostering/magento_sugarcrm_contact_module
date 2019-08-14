@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<layout version="1.0.0">
+    <adminhtml_sugarsetting_index>
+		<reference name="head">
+			<action method="addJs"><script>offshoreevolution/jquery-1.10.2.js</script></action>
+		</reference>
+        <update handle="editor"/>
+        <reference name="content">
+            <block type="sugarcrm/adminhtml_form_edit" name="adminform" />
+			<block type="sugarcrm/adminhtml_ajaxblock" name="head" template="offshoreevolution/form.phtml" />
+        </reference>
+    </adminhtml_sugarsetting_index>
+	
+	<adminhtml_sugarsetting_save>
+		 <block type="sugarcrm/adminhtml_ajaxblock" name="root" template="offshoreevolution/test.phtml" />
+    </adminhtml_sugarsetting_save>
+
+	<adminhtml_sugarsetting_modulelist>
+		<reference name="head">
+			<action method="addJs"><script>offshoreevolution/jquery-1.10.2.js</script></action>
+			<action method="addJs"><script>offshoreevolution/jquery-ui.js</script></action>
+			<action method="addJs"><script>offshoreevolution/sorting.js</script></action>
+		</reference>
+		<update handle="editor"/>
+		<reference name="content">
+			<block type="sugarcrm/adminhtml_moduleform_edit" name="adminform" />
+		</reference>
+    </adminhtml_sugarsetting_modulelist>
+	
+	<adminhtml_sugarsetting_useroperations>
+		<reference name="head">
+			<action method="addJs"><script>offshoreevolution/jquery-1.10.2.js</script></action>
+		</reference>
+		<reference name="content">
+			<block type="sugarcrm/adminhtml_useroperations_edit" name="adminform" />
+			<block type="sugarcrm/adminhtml_ajaxblock" name="moduleList" template="offshoreevolution/useroperations.phtml"/>
+		</reference>
+    </adminhtml_sugarsetting_useroperations>
+	
+	<adminhtml_synctable_index>
+		<reference name="head">
+			<action method="addJs"><script>offshoreevolution/jquery-1.10.2.js</script></action>
+		</reference>
+		<reference name="content">
+			<block type="sugarcrm/adminhtml_synctable_grid" name="synctable" />
+			<block type="sugarcrm/adminhtml_ajaxblock" name="synctablephtml" template="offshoreevolution/synctable.phtml"/>
+		</reference>
+    </adminhtml_synctable_index>
+	
+	<adminhtml_synctable_edit>
+		<reference name="head">
+			<action method="addJs"><script>offshoreevolution/jquery-1.10.2.js</script></action>
+		</reference>
+		<reference name="content">
+			<block type="sugarcrm/adminhtml_synctable_grid_edit" name="syncTableEdit" />
+		</reference>
+	</adminhtml_synctable_edit>
+	
+	<adminhtml_synctable_bridge>
+		<reference name="head">
+			<action method="addJs"><script>offshoreevolution/jquery-1.10.2.js</script></action>
+		</reference>
+		<reference name="content">
+			<block type="sugarcrm/adminhtml_moduleform_edit" name="adminform" />
+			<block type="sugarcrm/adminhtml_ajaxblock" name="moduleList" template="offshoreevolution/sugarbridge.phtml"/>
+		</reference>
+	</adminhtml_synctable_bridge>
+	
+	<adminhtml_ajax_fetchmodule>
+		<block type="sugarcrm/adminhtml_ajaxblock" name="root" template="offshoreevolution/ajax.phtml" />
+	</adminhtml_ajax_fetchmodule>
+</layout>

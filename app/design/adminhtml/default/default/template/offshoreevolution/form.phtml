@@ -1,0 +1,66 @@
+<script language="javascript">
+$jq(".testConnection").click(function(e) {
+	ajaxCall();
+});
+$jq(".syncfield").click(function(e) {
+	var reloadurl = '<?php echo $this->getUrl('adminhtml/ajax/Syncnewfields') ?>';
+	
+	new Ajax.Request(reloadurl, {
+	method: 'post',
+	parameters: {},
+	onComplete: function(response) {
+		if(response.responseText == "updated")
+		{
+			$jq("#messages").html('<ul class="messages"><li class="success-msg"><ul><li><spans>Fields synchronized successfully</span></li></ul></li></ul>');
+		}
+		else
+		{
+			$jq("#messages").html('<ul class="messages"><li class="success-msg"><ul><li><spans>Fields synchronized successfully</span></li></ul></li></ul>');
+		}
+		$jq("#loading-mask").hide();
+	}
+	});
+});
+</script>
+
+<script>
+function ajaxCall()
+{
+	var sugarUrl = $jq("#url").val();
+	var username = $jq("#username").val();
+	var password = $jq("#password").val();
+	
+	if(sugarUrl == '' || sugarUrl == null){
+		$jq("#url").focus();
+		alert ("SugarCRM URL is required field");
+		return false;
+	}
+	if(username == '' || username == null){
+		$jq("#username").focus();
+		alert ("SugarCRM Admin User is required field");
+		return false;
+	}
+	if(password == '' || password == null){
+		$jq("#password").focus();
+		alert ("SugarCRM Admin Password is required field");
+		return false;
+	}
+	var reloadurl = '<?php echo $this->getUrl('adminhtml/sugarsetting/test') ?>';
+	
+	new Ajax.Request(reloadurl, {
+	method: 'post',
+	parameters: {url:sugarUrl ,username : username ,password : password },
+	onComplete: function(response) {
+		if(response.responseText == "true")
+		{
+			$jq("#messages").html('<ul class="messages"><li class="success-msg"><ul><li><span>Connection Established Successfully</span></li></ul></li></ul>');
+		}
+		else
+		{
+			$jq("#messages").html('<ul class="messages"><li class="error-msg"><ul><li><span>Connection Failed,Please verify your login details</span></li></ul></li></ul>');
+		}
+		$jq("#loading-mask").hide();
+	}
+	});
+}
+</script>

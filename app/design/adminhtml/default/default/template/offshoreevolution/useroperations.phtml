@@ -1,0 +1,59 @@
+<div class="OEPL_infoDiv">
+	<div class="OEPL_title"><h2 style="margin:0px;float:left">Instructions</h2><a class="OEPL_close_info">okey</a></div>
+    <div class="content">
+    	<p>If this option is enabled. Extension will create a new contact in SugarCRM whenever a customer checkout as a guest in order process.</p>
+        <p>Extension will fetch all the mapped fields &</p>
+        <ul style="list-style:circle;margin-left:25px">
+        	<li>Match all 'Contact information field' with Billing details.</li>
+            <li>Match all 'Billing Address Field' with Billing details.</li>
+            <li>Match all 'Shipping Address Field' with Shipping details.</li>
+        </ul>
+    </div>
+</div>
+
+<script>
+	$jq(".OEPL_show_info").click(function(){
+		$jq(".OEPL_infoDiv").show();
+	});
+	$jq(".OEPL_close_info").click(function(){
+		$jq(".OEPL_infoDiv").hide();
+	});
+</script>
+
+<style>
+.OEPL_close_info{
+	float:right;
+	padding:5px 10px;
+	font-style:italic;
+	color:#fff;
+	text-decoration:none;
+	cursor:pointer;
+}
+.OEPL_close_info:hover{
+	color:#fff;
+	text-decoration:none;
+}
+.OEPL_infoDiv{
+	display:none;
+	position:fixed;
+	margin:0 auto;
+	margin-left:33%;
+	margin-top:-300px;
+	box-shadow: 0px 0px 10px 3px rgba(85, 102, 99, 1);
+	width:400px;
+}
+.OEPL_infoDiv .OEPL_title{
+	background-color:#03A9F4;
+	height:25px;
+	color:#fff;
+	padding:5px 10px;
+	margin-bottom:0px;
+}
+.OEPL_infoDiv .content{
+	margin-top:0px;
+	margin-bottom:0px;
+	border:1px solid #03A9F4;
+	background-color:#fff;
+	padding:15px 20px;
+}
+</style>
