@@ -3,7 +3,7 @@
 		var thisObj = $jq(this);
 		var field = $jq(this).parent('td').siblings('td').find('select').val();
 		var id = $jq(this).attr('pid');
-		var ajaxUrl = '<?php echo $this->getUrl('adminhtml/ajax/crmsync') ?>';
+		var ajaxUrl = '<?php echo $this->getUrl('adminhtml/ajax/mapfield') ?>';
 		
 		new Ajax.Request(ajaxUrl, {
 			method: 'post',
